@@ -14,7 +14,7 @@ public class BuildManager : MonoBehaviour
     public event EventHandler<OnBuildEventArgs> OnDestroy;
     public class OnBuildEventArgs : EventArgs
     {
-        public GameObject builtBuilding;
+        public Building.buildingTypes buildingType;
     }
 
     // Start is called before the first frame update
@@ -47,22 +47,21 @@ public class BuildManager : MonoBehaviour
 
     public void Build(Vector3 position)
     {
-        var builtBuilding = buildingList[buildingIndex];
+        Building.buildingTypes builtType = buildingList[buildingIndex].GetComponent<Building>().GetBuildingType();
 
         Instantiate(buildingList[buildingIndex], position, Quaternion.identity);
 
-        OnBuild?.Invoke(this, new OnBuildEventArgs { builtBuilding = builtBuilding });
+        OnBuild?.Invoke(this, new OnBuildEventArgs { buildingType = builtType });
 
     }
 
     public void DestroyBuilding(GameObject building)
     {
-        var builtBuilding = building;
-        //var buildingType = building.GetComponent<Building>().GetBuildingType();
+        Building.buildingTypes builtType = building.GetComponent<Building>().GetBuildingType();
 
         Destroy(building);
 
-        OnDestroy?.Invoke(this, new OnBuildEventArgs { builtBuilding = builtBuilding });
+        OnDestroy?.Invoke(this, new OnBuildEventArgs { buildingType = builtType });
     }
 
 }

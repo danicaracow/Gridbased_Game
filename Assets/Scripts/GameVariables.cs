@@ -27,11 +27,9 @@ public class GameVariables : MonoBehaviour
 
     
 
-    private void IncreaseBuildingNumber(GameObject builtBuilding)
+    private void IncreaseBuildingNumber(Building.buildingTypes buildingType)
     {
-        Building buildingType = builtBuilding.GetComponent<Building>();
-
-        switch (buildingType.Type)
+        switch (buildingType)
         {
             case Building.buildingTypes.Mine:
                 mineNumber++;
@@ -45,11 +43,9 @@ public class GameVariables : MonoBehaviour
         UImanager.UpdateBuildingNumber(mineNumber, farmNumber);
     }
 
-    private void DecreaseBuildingNumber(GameObject builtBuilding)
+    private void DecreaseBuildingNumber(Building.buildingTypes buildingType)
     {
-        Building buildingType = builtBuilding.GetComponent<Building>();
-
-        switch (buildingType.Type)
+        switch (buildingType)
         {
             case Building.buildingTypes.Mine:
                 mineNumber--;
@@ -67,11 +63,11 @@ public class GameVariables : MonoBehaviour
 
     private void BuildManager_OnBuild(object sender, BuildManager.OnBuildEventArgs e)
     {
-        IncreaseBuildingNumber(e.builtBuilding);
+        IncreaseBuildingNumber(e.buildingType);
     }
 
     private void BuildManager_OnDestroy(object sender, BuildManager.OnBuildEventArgs e)
     {
-        DecreaseBuildingNumber(e.builtBuilding);
+        DecreaseBuildingNumber(e.buildingType);
     }
 }
