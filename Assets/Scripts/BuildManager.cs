@@ -15,6 +15,7 @@ public class BuildManager : MonoBehaviour
     public class OnBuildEventArgs : EventArgs
     {
         public Building.buildingTypes buildingType;
+        public bool increaseNumber;
     }
 
     // Start is called before the first frame update
@@ -51,7 +52,7 @@ public class BuildManager : MonoBehaviour
 
         Instantiate(buildingList[buildingIndex], position, Quaternion.identity);
 
-        OnBuild?.Invoke(this, new OnBuildEventArgs { buildingType = builtType });
+        OnBuild?.Invoke(this, new OnBuildEventArgs { buildingType = builtType, increaseNumber = true });
 
     }
 
@@ -61,7 +62,7 @@ public class BuildManager : MonoBehaviour
 
         Destroy(building);
 
-        OnDestroy?.Invoke(this, new OnBuildEventArgs { buildingType = builtType });
+        OnDestroy?.Invoke(this, new OnBuildEventArgs { buildingType = builtType, increaseNumber = false });
     }
 
 }
