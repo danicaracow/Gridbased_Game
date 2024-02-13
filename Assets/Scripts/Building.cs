@@ -11,4 +11,9 @@ public abstract class Building : MonoBehaviour
     }
 
     public abstract buildingTypes Type { get; }
+
+    public buildingTypes GetBuildingType()
+    {
+        return Type;
+    }
 }

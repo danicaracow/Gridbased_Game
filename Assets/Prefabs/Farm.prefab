@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8917583833569480525}
   - component: {fileID: 3491503858067842982}
   - component: {fileID: -5106794099206250646}
+  - component: {fileID: 5751718896943208125}
   m_Layer: 0
   m_Name: Farm
   m_TagString: Untagged
@@ -88,6 +89,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13627641ab2e06478e7ebaf7201d5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &5751718896943208125
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200919623088992509}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.0081313, z: 1}
+  m_Center: {x: 0, y: 0.5041368, z: 0}
 --- !u!1 &2981051103765167295
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +113,6 @@ GameObject:
   - component: {fileID: 3782783202078373738}
   - component: {fileID: 7035261610496625958}
   - component: {fileID: 5044106417790169794}
-  - component: {fileID: 1936030875257202322}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -172,16 +185,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1936030875257202322
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981051103765167295}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

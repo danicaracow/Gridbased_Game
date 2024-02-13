@@ -18,11 +18,14 @@ public class GameVariables : MonoBehaviour
     private void Start()
     {
         buildManager = GetComponent<BuildManager>();
-        buildManager.OnBuild += MouseSelection_OnBuild;
+        buildManager.OnBuild += BuildManager_OnBuild;
+        buildManager.OnDestroy += BuildManager_OnDestroy;
 
         mineNumber = 0;
         farmNumber = 0;
     }
+
+    
 
     private void IncreaseBuildingNumber(GameObject builtBuilding)
     {
@@ -42,9 +45,33 @@ public class GameVariables : MonoBehaviour
         UImanager.UpdateBuildingNumber(mineNumber, farmNumber);
     }
 
+    private void DecreaseBuildingNumber(GameObject builtBuilding)
+    {
+        Building buildingType = builtBuilding.GetComponent<Building>();
 
-    private void MouseSelection_OnBuild(object sender, BuildManager.OnBuildEventArgs e)
+        switch (buildingType.Type)
+        {
+            case Building.buildingTypes.Mine:
+                mineNumber--;
+                break;
+
+            case Building.buildingTypes.Farm:
+                farmNumber--;
+                break;
+        }
+
+        UImanager.UpdateBuildingNumber(mineNumber, farmNumber);
+    }
+
+
+
+    private void BuildManager_OnBuild(object sender, BuildManager.OnBuildEventArgs e)
     {
         IncreaseBuildingNumber(e.builtBuilding);
+    }
+
+    private void BuildManager_OnDestroy(object sender, BuildManager.OnBuildEventArgs e)
+    {
+        DecreaseBuildingNumber(e.builtBuilding);
     }
 }

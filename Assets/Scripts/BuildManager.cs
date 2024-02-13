@@ -11,6 +11,7 @@ public class BuildManager : MonoBehaviour
     private int buildingIndex;
 
     public event EventHandler<OnBuildEventArgs> OnBuild;
+    public event EventHandler<OnBuildEventArgs> OnDestroy;
     public class OnBuildEventArgs : EventArgs
     {
         public GameObject builtBuilding;
@@ -54,5 +55,14 @@ public class BuildManager : MonoBehaviour
 
     }
 
+    public void DestroyBuilding(GameObject building)
+    {
+        var builtBuilding = building;
+        //var buildingType = building.GetComponent<Building>().GetBuildingType();
+
+        Destroy(building);
+
+        OnDestroy?.Invoke(this, new OnBuildEventArgs { builtBuilding = builtBuilding });
+    }
 
 }

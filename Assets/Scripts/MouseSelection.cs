@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class MouseSelection : MonoBehaviour
 {
@@ -38,6 +37,19 @@ public class MouseSelection : MonoBehaviour
                 Vector3 cellPos = _selectedObject.transform.position;
 
                 buildManager.Build(cellPos);
+            }
+
+            _selectedObject = null;
+        }
+
+        if (Input.GetMouseButtonUp(1)) 
+        {
+            if (hit.collider != null) _selectedObject = hit.collider.gameObject;
+            Debug.Log("Input received!");
+            if (_selectedObject != null && _selectedObject.GetComponent<Building>())
+            {
+                Debug.Log("Building received!");
+                buildManager.DestroyBuilding(_selectedObject);
             }
         }
     }
