@@ -1,12 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MouseSelection : MonoBehaviour
 {
     [SerializeField] private GameObject _selectedObject;
     [SerializeField] private Camera _mainCamera;
     private LayerMask _selectableMask;
+    private BuildManager buildManager;
+
+
+
+    
+
+    private void Start()
+    {
+        buildManager = GetComponent<BuildManager>();
+    }
 
     private void Update()
     {
@@ -25,16 +37,10 @@ public class MouseSelection : MonoBehaviour
                 Debug.Log("Build!");
                 Vector3 cellPos = _selectedObject.transform.position;
 
-                Build(cellPos);
+                buildManager.Build(cellPos);
             }
         }
     }
 
-    private void Build(Vector3 position)
-    {
-        var minePrefab = GetComponent<BuildManager>().BuildingGetter();
-
-        Instantiate(minePrefab, position, Quaternion.identity);
-
-    }
+    
 }
