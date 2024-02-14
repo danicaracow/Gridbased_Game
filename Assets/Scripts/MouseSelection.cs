@@ -5,18 +5,29 @@ using UnityEngine;
 
 public class MouseSelection : MonoBehaviour
 {
+    public enum State
+    {
+        Select,
+        Build,
+        Destroy
+    }
+    private State state = State.Select;
+
     [SerializeField] private GameObject _selectedObject;
     [SerializeField] private Camera _mainCamera;
     private LayerMask _selectableMask;
     private BuildManager buildManager;
 
 
-
-    
-
     private void Start()
     {
+
+
         buildManager = GetComponent<BuildManager>();
+
+        UIManager.Instance.buildButton.onClick.AddListener(OnBuildButtonPressed);
+        UIManager.Instance.destroyButton.onClick.AddListener(OnDestroyButtonPressed);
+        UIManager.Instance.selectButton.onClick.AddListener(OnSelectButtonPressed);
     }
 
     private void Update()
@@ -54,5 +65,23 @@ public class MouseSelection : MonoBehaviour
         }
     }
 
-    
+
+    private void OnBuildButtonPressed()
+    {
+        state = State.Build;
+        Debug.Log(state);
+    }
+
+    private void OnDestroyButtonPressed()
+    {
+        state = State.Destroy;
+        Debug.Log(state);
+    }
+
+    private void OnSelectButtonPressed()
+    {
+        state = State.Select;
+        Debug.Log(state);
+    }
+
 }
