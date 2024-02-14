@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     public Button buildButton;
     public Button destroyButton;
     public Button selectButton;
+    public Button mineSelectButton;
+    public Button farmSelectButton;
+
+    private bool IsBuildMenuOpen;
 
     public static UIManager Instance { get; private set; }
 
@@ -27,6 +31,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Instance.buildButton.onClick.AddListener(OnBuildButtonPressed);
+
+        //Dinamic buttons (Disabled on start)
+        mineSelectButton.gameObject.SetActive(false);
+        farmSelectButton.gameObject.SetActive(false);
+    }
+
 
     public void UpdateBuildingNumber(int mineNumber, int farmNumber)
     {
@@ -34,4 +47,26 @@ public class UIManager : MonoBehaviour
         farmNumber_text.text = farmNumber.ToString();
     }
 
+    private void OnBuildButtonPressed()
+    {
+        OpenBuildButtonMenu();
+    }
+
+    private void OpenBuildButtonMenu()
+    {
+        mineSelectButton.transform.position = buildButton.transform.position + new Vector3(-40, 50);
+        farmSelectButton.transform.position = buildButton.transform.position + new Vector3(40, 50);
+        if (!IsBuildMenuOpen)
+        {
+            mineSelectButton.gameObject.SetActive(true);
+            farmSelectButton.gameObject.SetActive(true);
+            IsBuildMenuOpen = true;
+        }
+        else
+        {
+            mineSelectButton.gameObject.SetActive(false);
+            farmSelectButton.gameObject.SetActive(false);
+            IsBuildMenuOpen = false;
+        }
+    }
 }

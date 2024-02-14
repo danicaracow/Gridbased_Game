@@ -21,8 +21,6 @@ public class MouseSelection : MonoBehaviour
 
     private void Start()
     {
-
-
         buildManager = GetComponent<BuildManager>();
 
         UIManager.Instance.buildButton.onClick.AddListener(OnBuildButtonPressed);
@@ -39,29 +37,30 @@ public class MouseSelection : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (hit.collider != null) _selectedObject = hit.collider.gameObject;
-
-
-            if (_selectedObject != null && _selectedObject.GetComponent<Collider>().tag == "ground")
+            switch (state)
             {
-                Debug.Log("Build!");
-                Vector3 cellPos = _selectedObject.transform.position;
+                case State.Build:
+                    if (hit.collider != null) _selectedObject = hit.collider.gameObject;
 
-                buildManager.Build(cellPos);
-            }
 
-            _selectedObject = null;
-        }
+                    if (_selectedObject != null && _selectedObject.GetComponent<Collider>().tag == "ground")
+                    {
+                        Vector3 cellPos = _selectedObject.transform.position;
 
-        if (Input.GetMouseButtonUp(1)) 
-        {
-            if (hit.collider != null) _selectedObject = hit.collider.gameObject;
-            Debug.Log("Input received!");
-            if (_selectedObject != null && _selectedObject.GetComponent<Building>())
-            {
-                Debug.Log("Building received!");
-                buildManager.DestroyBuilding(_selectedObject);
-            }
+                        buildManager.Build(cellPos);
+                    }
+
+                    _selectedObject = null;
+                    break;
+
+                case State.Destroy:
+                    if (hit.collider != null) _selectedObject = hit.collider.gameObject;
+                    if (_selectedObject != null && _selectedObject.GetComponent<Building>())
+                    {
+                        buildManager.DestroyBuilding(_selectedObject);
+                    }
+                    break;
+            } 
         }
     }
 

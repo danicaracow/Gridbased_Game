@@ -21,24 +21,14 @@ public class BuildManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        UIManager.Instance.mineSelectButton.onClick.AddListener(OnMineSelectButtonPressed);
+        UIManager.Instance.farmSelectButton.onClick.AddListener(OnFarmSelectButtonPressed);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            selectedBuildingType = Building.buildingTypes.Mine;
-            buildingIndex = (int)selectedBuildingType;
-            Debug.Log("Mine selected!");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            selectedBuildingType = Building.buildingTypes.Farm;
-            buildingIndex = (int)selectedBuildingType;
-            Debug.Log("Farm selected!");
-        }
+
     }
 
     public GameObject BuildingGetter()
@@ -65,4 +55,15 @@ public class BuildManager : MonoBehaviour
         OnDestroy?.Invoke(this, new OnBuildEventArgs { buildingType = builtType, increaseNumber = false });
     }
 
+    private void OnMineSelectButtonPressed()
+    {
+        selectedBuildingType = Building.buildingTypes.Mine;
+        buildingIndex = (int)selectedBuildingType;
+    }
+
+    private void OnFarmSelectButtonPressed()
+    {
+        selectedBuildingType = Building.buildingTypes.Farm;
+        buildingIndex = (int)selectedBuildingType;
+    }
 }
