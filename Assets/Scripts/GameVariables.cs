@@ -9,10 +9,27 @@ public class GameVariables : MonoBehaviour
     [SerializeField] private int mineNumber;
     [SerializeField] private int farmNumber;
 
-    [SerializeField] private UIManager UImanager;
+    //Resources
+    [SerializeField] private int goldAmount;
+    [SerializeField] private int foodAmount;
+
+
+    //References
     private BuildManager buildManager;
 
+    public static GameVariables Instance { get; private set; }
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
 
     private void Start()
@@ -40,7 +57,7 @@ public class GameVariables : MonoBehaviour
                 break;
         }
 
-        UImanager.UpdateBuildingNumber(mineNumber, farmNumber);
+        UIManager.Instance.UpdateBuildingNumber(mineNumber, farmNumber);
     }
 
     private void BuildManager_OnBuildDestroy(object sender, BuildManager.OnBuildEventArgs e)
@@ -52,4 +69,16 @@ public class GameVariables : MonoBehaviour
     //{
     //    ModifyBuildingNumber(e.buildingType, e.increaseNumber);
     //}
+
+
+    //Get resources
+    public void GetGold(int goldIncrease)
+    {
+        goldAmount += goldIncrease;
+    }
+
+    public void GetFood(int foodIncrease)
+    {
+        foodAmount += foodIncrease;
+    }
 }

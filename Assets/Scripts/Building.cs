@@ -12,8 +12,15 @@ public abstract class Building : MonoBehaviour
 
     public abstract buildingTypes Type { get; }
 
+    public float nextResourceGatheringTime;
+    public float resourceGatheringRate;
+    public int resourceGatheringAmount;
+
     public buildingTypes GetBuildingType()
     {
         return Type;
     }
+
+
+    public abstract void GetResource(int resourceIncrease);
 }
