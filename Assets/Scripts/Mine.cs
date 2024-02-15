@@ -9,8 +9,8 @@ public class Mine : Building
         nextResourceGatheringTime = Time.time;
 
         //This values should be taken from a scriptable object
-        resourceGatheringRate = 5f;
-        resourceGatheringAmount = 1;
+        resourceGatheringRate = GameVariables.Instance.mineGatheringRate;
+        resourceGatheringAmount = GameVariables.Instance.mineGatheringAmount;
     }
     private void Update()
     {

@@ -14,8 +14,8 @@ public class Farm : Building
         nextResourceGatheringTime = Time.time;
 
         //This values should be taken from a scriptable object
-        resourceGatheringRate = 2f;
-        resourceGatheringAmount = 1;
+        resourceGatheringRate = GameVariables.Instance.farmGatheringRate;
+        resourceGatheringAmount = GameVariables.Instance.farmGatheringAmount;
     }
     private void Update()
     {

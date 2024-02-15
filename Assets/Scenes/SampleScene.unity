@@ -1389,7 +1389,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mineNumber: 0
   farmNumber: 0
-  UImanager: {fileID: 40967624}
+  goldAmount: 0
+  foodAmount: 0
+  buildingStartStats: {fileID: 11400000, guid: b157084762edad644819d52ef9485d2e, type: 2}
 --- !u!1 &1583476921
 GameObject:
   m_ObjectHideFlags: 0

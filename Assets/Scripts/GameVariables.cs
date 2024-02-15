@@ -6,16 +6,27 @@ using UnityEngine;
 
 public class GameVariables : MonoBehaviour
 {
-    [SerializeField] private int mineNumber;
-    [SerializeField] private int farmNumber;
+    //Start Stats
+        //Resource gathering stats
+        public float mineGatheringRate { get; private set;}
+        public int mineGatheringAmount { get; private set;}
+        public float farmGatheringRate { get; private set; }
+        public int farmGatheringAmount { get; private set; }
 
-    //Resources
-    [SerializeField] private int goldAmount;
-    [SerializeField] private int foodAmount;
+
+    //Current Stats
+        //Building number
+        [SerializeField] private int mineNumber;
+        [SerializeField] private int farmNumber;
+
+        //Total Resources
+        [SerializeField] private int goldAmount;
+        [SerializeField] private int foodAmount;
 
 
     //References
     private BuildManager buildManager;
+    [SerializeField] private BuildingStartStats buildingStartStats;
 
     public static GameVariables Instance { get; private set; }
 
@@ -40,6 +51,12 @@ public class GameVariables : MonoBehaviour
 
         mineNumber = 0;
         farmNumber = 0;
+
+        //Assign start stats values
+        mineGatheringRate = buildingStartStats.MineGatheringRate;
+        mineGatheringAmount = buildingStartStats.MineGatheringAmount;
+        farmGatheringRate = buildingStartStats.FarmGatheringRate;
+        farmGatheringAmount = buildingStartStats.FarmGatheringAmount;
     }
 
     private void ModifyBuildingNumber(Building.buildingTypes buildingType, bool increaseNumber)
