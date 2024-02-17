@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a5649140ea70a41968c4a4a1bc14e5, type: 3}
   m_Name: BuildingStartStats
   m_EditorClassIdentifier: 
-  MineGatheringRate: 5
-  MineGatheringAmount: 1
-  FarmGatheringRate: 2
-  FarmGatheringAmount: 1
+  mineData:
+    gatheringAmount: 0
+    gatheringRate: 0
+  farmData:
+    gatheringAmount: 0
+    gatheringRate: 0

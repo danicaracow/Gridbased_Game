@@ -53,10 +53,10 @@ public class GameVariables : MonoBehaviour
         farmNumber = 0;
 
         //Assign start stats values
-        mineGatheringRate = buildingStartStats.MineGatheringRate;
-        mineGatheringAmount = buildingStartStats.MineGatheringAmount;
-        farmGatheringRate = buildingStartStats.FarmGatheringRate;
-        farmGatheringAmount = buildingStartStats.FarmGatheringAmount;
+        mineGatheringRate = buildingStartStats.mineData.gatheringRate;
+        mineGatheringAmount = buildingStartStats.mineData.gatheringAmount;
+        farmGatheringRate = buildingStartStats.farmData.gatheringRate;
+        farmGatheringAmount = buildingStartStats.farmData.gatheringAmount;
     }
 
     private void ModifyBuildingNumber(Building.buildingTypes buildingType, bool increaseNumber)

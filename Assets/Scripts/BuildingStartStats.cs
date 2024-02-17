@@ -5,10 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BuildingStartStats", menuName = "ScriptableObjects/BuildingStartStats")]
 public class BuildingStartStats : ScriptableObject
 {
-    public float MineGatheringRate;
-    public int MineGatheringAmount;
+    [System.Serializable]
+    public class BuildingData
+    {
+        public int gatheringAmount;
+        public float gatheringRate;
+    }
 
-    public float FarmGatheringRate;
-    public int FarmGatheringAmount;
+    public BuildingData mineData = new BuildingData();
+    public BuildingData farmData = new BuildingData();
 
 }
