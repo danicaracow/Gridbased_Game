@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 
-public class UIManager : MonoBehaviour
+public class BuildSystemUI : MonoBehaviour
 {
 
     public Button buildButton;

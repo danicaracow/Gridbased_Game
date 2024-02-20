@@ -17,17 +17,21 @@ public class GameVariables : MonoBehaviour
 
     //Current Stats
         //Building number
-        [SerializeField] private int mineNumber;
-        [SerializeField] private int farmNumber;
+        [SerializeField] public int mineNumber { get; private set;}
+        [SerializeField] public int farmNumber { get; private set; }
 
         //Total Resources
-        [SerializeField] private int goldAmount;
-        [SerializeField] private int foodAmount;
+        [SerializeField] public int goldAmount { get; private set; }
+        [SerializeField] public int foodAmount { get; private set; }
 
 
     //References
     private BuildSystem buildSystem;
     [SerializeField] private BuildingStartStats buildingStartStats;
+
+    //Events
+    public event EventHandler OnBuildFinished;
+    public event EventHandler OnResourceGathered;
 
     public static GameVariables Instance { get; private set; }
 
@@ -53,6 +57,9 @@ public class GameVariables : MonoBehaviour
         mineNumber = 0;
         farmNumber = 0;
 
+        goldAmount = 0;
+        foodAmount = 0;
+
         //Assign start stats values
         mineGatheringRate = buildingStartStats.mineData.gatheringRate;
         mineGatheringAmount = buildingStartStats.mineData.gatheringAmount;
@@ -75,7 +82,8 @@ public class GameVariables : MonoBehaviour
                 break;
         }
 
-        PlayerStatsUI.Instance.UpdateBuildingNumber(mineNumber, farmNumber);
+        OnBuildFinished?.Invoke(this, EventArgs.Empty);
+        //PlayerStatsUI.Instance.UpdateBuildingNumber(mineNumber, farmNumber);
     }
 
     private void BuildManager_OnBuildDestroy(object sender, BuildSystem.OnBuildEventArgs e)
@@ -96,6 +104,6 @@ public class GameVariables : MonoBehaviour
                 break;
         }
 
-        PlayerStatsUI.Instance.UpdateResourcesNumber(goldAmount, foodAmount);
+        OnResourceGathered?.Invoke(this, EventArgs.Empty);
     }
 }

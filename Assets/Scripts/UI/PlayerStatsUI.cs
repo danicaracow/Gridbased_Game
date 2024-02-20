@@ -23,6 +23,23 @@ public class PlayerStatsUI : MonoBehaviour
             Instance = this;
         }
     }
+
+    private void Start()
+    {
+        GameVariables.Instance.OnBuildFinished += GameVariables_OnBuildFinished;
+        GameVariables.Instance.OnResourceGathered += GameVariables_OnResourceGathered;
+    }
+
+    private void GameVariables_OnBuildFinished(object sender, System.EventArgs e)
+    {
+        UpdateBuildingNumber(GameVariables.Instance.mineNumber, GameVariables.Instance.farmNumber);
+    }
+
+    private void GameVariables_OnResourceGathered(object sender, System.EventArgs e)
+    {
+        UpdateResourcesNumber(GameVariables.Instance.goldAmount, GameVariables.Instance.foodAmount);
+    }
+
     public void UpdateBuildingNumber(int mineNumber, int farmNumber)
     {
         mineNumber_text.text = mineNumber.ToString();
