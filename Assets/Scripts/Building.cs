@@ -23,5 +23,8 @@ public abstract class Building : MonoBehaviour
     }
 
 
-    public abstract void GetResource(int resourceIncrease);
+    public virtual void GetResource(int resourceIncrease, buildingTypes buildingType)
+    {
+        GameVariables.Instance.GetResource(resourceIncrease, buildingType);
+    }
 }

@@ -4,11 +4,6 @@ public class Farm : Building
 {
     public override buildingTypes Type => buildingTypes.Farm;
 
-    public override void GetResource(int goldIncrease)
-    {
-        GameVariables.Instance.GetFood(goldIncrease);
-    }
-
     private void Start()
     {
         nextResourceGatheringTime = Time.time;
@@ -21,8 +16,9 @@ public class Farm : Building
     {
         if (Time.time > nextResourceGatheringTime)
         {
-            GetResource(resourceGatheringAmount);
+            GetResource(resourceGatheringAmount, buildingTypes.Farm);
             nextResourceGatheringTime = Time.time + resourceGatheringRate;
         }
     }
+
 }

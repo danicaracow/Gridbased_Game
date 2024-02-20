@@ -16,16 +16,26 @@ public class MouseSelection : MonoBehaviour
     [SerializeField] private GameObject _selectedObject;
     [SerializeField] private Camera _mainCamera;
     private LayerMask _selectableMask;
-    private BuildManager buildManager;
+    private BuildSystem buildSystem;
 
+    public static MouseSelection Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
-        buildManager = GetComponent<BuildManager>();
+        buildSystem = GetComponent<BuildSystem>();
 
-        UIManager.Instance.buildButton.onClick.AddListener(OnBuildButtonPressed);
-        UIManager.Instance.destroyButton.onClick.AddListener(OnDestroyButtonPressed);
-        UIManager.Instance.selectButton.onClick.AddListener(OnSelectButtonPressed);
     }
 
     private void Update()
@@ -47,7 +57,7 @@ public class MouseSelection : MonoBehaviour
                     {
                         Vector3 cellPos = _selectedObject.transform.position;
 
-                        buildManager.Build(cellPos);
+                        buildSystem.Build(cellPos);
                     }
 
                     _selectedObject = null;
@@ -57,7 +67,7 @@ public class MouseSelection : MonoBehaviour
                     if (hit.collider != null) _selectedObject = hit.collider.gameObject;
                     if (_selectedObject != null && _selectedObject.GetComponent<Building>())
                     {
-                        buildManager.DestroyBuilding(_selectedObject);
+                        buildSystem.DestroyBuilding(_selectedObject);
                     }
                     break;
             } 
@@ -65,19 +75,19 @@ public class MouseSelection : MonoBehaviour
     }
 
 
-    private void OnBuildButtonPressed()
+    public void OnBuildButtonPressed()
     {
         state = State.Build;
         Debug.Log(state);
     }
 
-    private void OnDestroyButtonPressed()
+    public void OnDestroyButtonPressed()
     {
         state = State.Destroy;
         Debug.Log(state);
     }
 
-    private void OnSelectButtonPressed()
+    public void OnSelectButtonPressed()
     {
         state = State.Select;
         Debug.Log(state);

@@ -16,13 +16,9 @@ public class Mine : Building
     {
         if (Time.time > nextResourceGatheringTime)
         {
-            GetResource(resourceGatheringAmount);
+            GetResource(resourceGatheringAmount, buildingTypes.Mine);
             nextResourceGatheringTime = Time.time + resourceGatheringRate;
         }
     }
 
-    public override void GetResource(int goldIncrease)
-    {
-        GameVariables.Instance.GetGold(goldIncrease);
-    }
 }

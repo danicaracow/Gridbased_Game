@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BuildingStartStats
   m_EditorClassIdentifier: 
   mineData:
-    gatheringAmount: 0
-    gatheringRate: 0
+    gatheringAmount: 1
+    gatheringRate: 2
   farmData:
-    gatheringAmount: 0
-    gatheringRate: 0
+    gatheringAmount: 1
+    gatheringRate: 1

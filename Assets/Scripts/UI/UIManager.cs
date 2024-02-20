@@ -7,8 +7,7 @@ using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text mineNumber_text;
-    [SerializeField] TMP_Text farmNumber_text;
+
     public Button buildButton;
     public Button destroyButton;
     public Button selectButton;
@@ -17,35 +16,24 @@ public class UIManager : MonoBehaviour
 
     private bool IsBuildMenuOpen;
 
-    public static UIManager Instance { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
 
     private void Start()
     {
-        Instance.buildButton.onClick.AddListener(OnBuildButtonPressed);
+        buildButton.onClick.AddListener(OnBuildButtonPressed);
+        mineSelectButton.onClick.AddListener(BuildSystem.Instance.OnMineSelectButtonPressed);
+        farmSelectButton.onClick.AddListener(BuildSystem.Instance.OnFarmSelectButtonPressed);
+        buildButton.onClick.AddListener(MouseSelection.Instance.OnBuildButtonPressed);
+        destroyButton.onClick.AddListener(MouseSelection.Instance.OnDestroyButtonPressed);
+        selectButton.onClick.AddListener(MouseSelection.Instance.OnSelectButtonPressed);
 
-        //Dinamic buttons (Disabled on start)
+        //Dynamic buttons (Disabled on start)
         mineSelectButton.gameObject.SetActive(false);
         farmSelectButton.gameObject.SetActive(false);
     }
 
 
-    public void UpdateBuildingNumber(int mineNumber, int farmNumber)
-    {
-        mineNumber_text.text = mineNumber.ToString();
-        farmNumber_text.text = farmNumber.ToString();
-    }
+
 
     private void OnBuildButtonPressed()
     {

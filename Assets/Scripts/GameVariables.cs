@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Building;
 
 
 public class GameVariables : MonoBehaviour
@@ -25,7 +26,7 @@ public class GameVariables : MonoBehaviour
 
 
     //References
-    private BuildManager buildManager;
+    private BuildSystem buildSystem;
     [SerializeField] private BuildingStartStats buildingStartStats;
 
     public static GameVariables Instance { get; private set; }
@@ -45,9 +46,9 @@ public class GameVariables : MonoBehaviour
 
     private void Start()
     {
-        buildManager = GetComponent<BuildManager>();
-        buildManager.OnBuild += BuildManager_OnBuildDestroy;
-        buildManager.OnDestroy += BuildManager_OnBuildDestroy;
+        buildSystem = GetComponent<BuildSystem>();
+        buildSystem.OnBuild += BuildManager_OnBuildDestroy;
+        buildSystem.OnDestroy += BuildManager_OnBuildDestroy;
 
         mineNumber = 0;
         farmNumber = 0;
@@ -74,28 +75,27 @@ public class GameVariables : MonoBehaviour
                 break;
         }
 
-        UIManager.Instance.UpdateBuildingNumber(mineNumber, farmNumber);
+        PlayerStatsUI.Instance.UpdateBuildingNumber(mineNumber, farmNumber);
     }
 
-    private void BuildManager_OnBuildDestroy(object sender, BuildManager.OnBuildEventArgs e)
+    private void BuildManager_OnBuildDestroy(object sender, BuildSystem.OnBuildEventArgs e)
     {
         ModifyBuildingNumber(e.buildingType, e.increaseNumber);
     }
 
-    //private void BuildManager_OnDestroy(object sender, BuildManager.OnBuildEventArgs e)
-    //{
-    //    ModifyBuildingNumber(e.buildingType, e.increaseNumber);
-    //}
-
-
-    //Get resources
-    public void GetGold(int goldIncrease)
+    public void GetResource(int resourceIncrease, buildingTypes buildingType)
     {
-        goldAmount += goldIncrease;
-    }
+        switch (buildingType)
+        {
+            case Building.buildingTypes.Mine:
+                goldAmount += resourceIncrease;
+                break;
 
-    public void GetFood(int foodIncrease)
-    {
-        foodAmount += foodIncrease;
+            case Building.buildingTypes.Farm:
+                foodAmount += resourceIncrease;
+                break;
+        }
+
+        PlayerStatsUI.Instance.UpdateResourcesNumber(goldAmount, foodAmount);
     }
 }

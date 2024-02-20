@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BuildManager : MonoBehaviour
+public class BuildSystem : MonoBehaviour
 {
     [SerializeField] GameObject[] buildingList;
     private Building.buildingTypes selectedBuildingType;
@@ -12,6 +12,21 @@ public class BuildManager : MonoBehaviour
 
     public event EventHandler<OnBuildEventArgs> OnBuild;
     public event EventHandler<OnBuildEventArgs> OnDestroy;
+
+
+    public static BuildSystem Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     public class OnBuildEventArgs : EventArgs
     {
         public Building.buildingTypes buildingType;
@@ -21,8 +36,7 @@ public class BuildManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UIManager.Instance.mineSelectButton.onClick.AddListener(OnMineSelectButtonPressed);
-        UIManager.Instance.farmSelectButton.onClick.AddListener(OnFarmSelectButtonPressed);
+
     }
 
     // Update is called once per frame
@@ -55,13 +69,13 @@ public class BuildManager : MonoBehaviour
         OnDestroy?.Invoke(this, new OnBuildEventArgs { buildingType = builtType, increaseNumber = false });
     }
 
-    private void OnMineSelectButtonPressed()
+    public void OnMineSelectButtonPressed()
     {
         selectedBuildingType = Building.buildingTypes.Mine;
         buildingIndex = (int)selectedBuildingType;
     }
 
-    private void OnFarmSelectButtonPressed()
+    public void OnFarmSelectButtonPressed()
     {
         selectedBuildingType = Building.buildingTypes.Farm;
         buildingIndex = (int)selectedBuildingType;
