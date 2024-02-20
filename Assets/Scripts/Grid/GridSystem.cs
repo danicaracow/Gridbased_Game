@@ -26,11 +26,15 @@ public class GridSystem : MonoBehaviour
         //    }
 
         //}
+        float xOffset = Random.Range(-10000f, 10000f);
+        float yOffset = Random.Range(-10000f, 10000f);
+
         float[,] noiseMap = new float[size, size];
         for (int x = 0; x < size; x++)
             for (int y = 0; y < size; y++)
-            { 
-                float noiseValue = Mathf.PerlinNoise(x * scale, y * scale);
+            {
+                
+                float noiseValue = Mathf.PerlinNoise(x * scale + xOffset, y * scale + yOffset);
                 noiseMap[x, y] = noiseValue;
             }
 
@@ -38,7 +42,7 @@ public class GridSystem : MonoBehaviour
         for (int x = 0; x < size; x++)
             for (int y = 0;y < size; y++)
             {
-                if (noiseMap[x, y] < 0.5f) Instantiate(groundPrefab, new Vector3(x, 0, y), Quaternion.identity);
+                if (noiseMap[x, y] < 0.7f) Instantiate(groundPrefab, new Vector3(x, 0, y), Quaternion.identity);
                 else Instantiate(waterPrefab, new Vector3(x, 0, y), Quaternion.identity);
             }
     }
