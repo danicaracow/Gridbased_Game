@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
-    [SerializeField] private Vector3 size;
+    [SerializeField] private int size;
+    [SerializeField] private float scale = 0.1f;
+    [SerializeField] private GridObject[,] gridObjects; 
     [SerializeField] private int gridSize;
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private GameObject waterPrefab;
@@ -13,24 +15,34 @@ public class GridSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < gridSize; i++)
-        {
-            Vector3 nextiPosition = transform.position + new Vector3(transform.position.x + (float)i, transform.position.y, transform.position.z);
-            Instantiate(groundPrefab, nextiPosition, Quaternion.identity);
-            for (int j = 1; j < gridSize; j++)
-            {
-                Vector3 nextjPosition = nextiPosition + new Vector3(transform.position.x, transform.position.y, transform.position.z + (float)j);
-                Instantiate(groundPrefab, nextjPosition, Quaternion.identity);
+        //for (int i = 0; i < gridSize; i++)
+        //{
+        //    Vector3 nextiPosition = transform.position + new Vector3(transform.position.x + (float)i, transform.position.y, transform.position.z);
+        //    Instantiate(groundPrefab, nextiPosition, Quaternion.identity);
+        //    for (int j = 1; j < gridSize; j++)
+        //    {
+        //        Vector3 nextjPosition = nextiPosition + new Vector3(transform.position.x, transform.position.y, transform.position.z + (float)j);
+        //        Instantiate(groundPrefab, nextjPosition, Quaternion.identity);
+        //    }
+
+        //}
+        float[,] noiseMap = new float[size, size];
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++)
+            { 
+                float noiseValue = Mathf.PerlinNoise(x * scale, y * scale);
+                noiseMap[x, y] = noiseValue;
             }
 
-        }
+        gridObjects = new GridObject[size, size];
+        for (int x = 0; x < size; x++)
+            for (int y = 0;y < size; y++)
+            {
+                if (noiseMap[x, y] < 0.5f) Instantiate(groundPrefab, new Vector3(x, 0, y), Quaternion.identity);
+                else Instantiate(waterPrefab, new Vector3(x, 0, y), Quaternion.identity);
+            }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //private void OnDrawGizmos()
     //{
