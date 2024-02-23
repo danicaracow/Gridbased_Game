@@ -23,7 +23,9 @@ public class BuildSystemUI : MonoBehaviour
         buildButton.onClick.AddListener(OnBuildButtonPressed);
         mineSelectButton.onClick.AddListener(BuildSystem.Instance.OnMineSelectButtonPressed);
         farmSelectButton.onClick.AddListener(BuildSystem.Instance.OnFarmSelectButtonPressed);
-        buildButton.onClick.AddListener(MouseSelection.Instance.OnBuildButtonPressed);
+        mineSelectButton.onClick.AddListener(MouseSelection.Instance.OnBuildButtonPressed);
+        farmSelectButton.onClick.AddListener(MouseSelection.Instance.OnBuildButtonPressed);
+        buildButton.onClick.AddListener(MouseSelection.Instance.OnSelectButtonPressed);
         destroyButton.onClick.AddListener(MouseSelection.Instance.OnDestroyButtonPressed);
         selectButton.onClick.AddListener(MouseSelection.Instance.OnSelectButtonPressed);
 
