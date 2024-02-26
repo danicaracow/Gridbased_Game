@@ -7,8 +7,9 @@ public class GridSystem : MonoBehaviour
 {
     [SerializeField] private int size;
     [SerializeField] private float scale = 0.1f;
-    [SerializeField] private Transform[,] gridObjects; 
-    [SerializeField] private int gridSize;
+    [SerializeField] private GameResources gameResources;
+    private List<GameResources.Resource> orderedResourceList;
+    [SerializeField] private GridObject[,] gridObjects; 
     [SerializeField] private Transform groundPrefab;
     [SerializeField] private Transform waterPrefab;
     [SerializeField] private Transform foodPrefab;
@@ -16,17 +17,7 @@ public class GridSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //for (int i = 0; i < gridSize; i++)
-        //{
-        //    Vector3 nextiPosition = transform.position + new Vector3(transform.position.x + (float)i, transform.position.y, transform.position.z);
-        //    Instantiate(groundPrefab, nextiPosition, Quaternion.identity);
-        //    for (int j = 1; j < gridSize; j++)
-        //    {
-        //        Vector3 nextjPosition = nextiPosition + new Vector3(transform.position.x, transform.position.y, transform.position.z + (float)j);
-        //        Instantiate(groundPrefab, nextjPosition, Quaternion.identity);
-        //    }
-
-        //}
+        /*
         float xOffsetWater = Random.Range(-10000f, 10000f);
         float yOffsetWater = Random.Range(-10000f, 10000f);
         float xOffsetFood = Random.Range(-10000f, 10000f);
@@ -80,7 +71,45 @@ public class GridSystem : MonoBehaviour
                         break;
                 }
             }
+        */
+        //Get ordered resource list from scriptable object
+        orderedResourceList = gameResources.GetOrderedResourceList();
+
+        //Perlin noise Offset generation
+        float xOffsetGround = Random.Range(-10000f, 10000f);
+        float yOffsetGround = Random.Range(-10000f, 10000f);
+
+        //Create GridObject array
+        //for (int x = 0; x < size; x++)
+        //    for (int y = 0; y < size; y++)
+        //    {
+        //        gridObjects[x,y] = new GridObject();
+        //    }
+
+
+        float[,] noiseMapGround = new float[size, size];
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++)
+            {
+                float noiseValueGround = Mathf.PerlinNoise(x * scale + xOffsetGround, y * scale + yOffsetGround);
+                noiseMapGround[x, y] = noiseValueGround;
+
+                if (noiseMapGround[x, y] < gameResources.ground.probability)
+                {
+                    //SEPARAR GROUND Y WATER DEL RESTO DE RESOURCES EN EL CONSTRUCTOR DE GRIDOBJECT??
+                    //gridObjects[x, y] = new GridObject(gameResources.ground.);
+                    gridObjects[x, y].GetComponent<GridObject>().ObjectType = GridObject.GridObjectType.Ground;
+                }
+
+            }
     }
+
+
+
+
+
+
+
 
 
     //private void OnDrawGizmos()

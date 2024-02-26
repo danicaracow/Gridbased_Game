@@ -8,6 +8,7 @@ public class BuildingStartStats : ScriptableObject
     [System.Serializable]
     public class BuildingData
     {
+        public string name;
         public int gatheringAmount;
         public float gatheringRate;
     }
@@ -15,4 +16,5 @@ public class BuildingStartStats : ScriptableObject
     public BuildingData mineData = new BuildingData();
     public BuildingData farmData = new BuildingData();
 
+    public List<BuildingData> buildingDataList = new List<BuildingData>();
 }

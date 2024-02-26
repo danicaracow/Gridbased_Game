@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 50
   scale: 0.1
-  gridSize: 10
+  gameResources: {fileID: 0}
   groundPrefab: {fileID: 1066208002577300539, guid: a4721fc63be81e24a90c95c4c8afee44, type: 3}
   waterPrefab: {fileID: 1066208002577300539, guid: a6cf23a9bc63c9244b370b3eff709eb5, type: 3}
   foodPrefab: {fileID: 1066208002577300539, guid: 28f67f087d6bc0641a8ddc704232c997, type: 3}
