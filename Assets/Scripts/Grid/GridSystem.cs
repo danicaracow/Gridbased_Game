@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GridSystem : MonoBehaviour
+public class GridSystem
 {
-    [SerializeField] private int size;
-    [SerializeField] private float scale = 0.1f;
-    [SerializeField] private GameResources gameResources;
+    
+    
+    private int size;
+    private float scale = 0.1f;
+    private GameResources gameResources;
     private List<GameResources.Resource> orderedResourceList;
-    [SerializeField] private GridObject[,] gridObjects;
-    [SerializeField] private GameObject[,] gridObjectsVisual;
-    [SerializeField] private Transform groundPrefab;
-    [SerializeField] private Transform waterPrefab;
-    [SerializeField] private Transform foodPrefab;
-    [SerializeField] private GameObject gridObjectPrefab;
+    public GridObject[,] gridObjects { get; private set; }
+    private GameObject[,] gridObjectsVisual;
+    private GameObject gridObjectPrefab;
+    
 
     // Start is called before the first frame update
-    void Start()
+    public GridSystem(int size, float scale, GameObject gridObjectPrefab, GameResources gameResources)
     {
-        orderedResourceList = gameResources.GetOrderedResourceList();
+        this.size = size;
+        this.scale = scale;
+        this.gridObjectPrefab = gridObjectPrefab;
+        this.gameResources = gameResources;
 
+        orderedResourceList = gameResources.GetOrderedResourceList();
 
         //Create GridObject (Ground/Water) array
         float xOffsetGround = Random.Range(-10000f, 10000f);
@@ -32,33 +36,29 @@ public class GridSystem : MonoBehaviour
             {
                 float noiseValueGround = Mathf.PerlinNoise(x * scale + xOffsetGround, y * scale + yOffsetGround);
                 noiseMapGround[x, y] = noiseValueGround;
+                GridPosition gridPosition = new GridPosition(x, y);
 
                 if (noiseMapGround[x, y] < gameResources.ground.probability)
                 {
                     //SEPARAR GROUND Y WATER DEL RESTO DE RESOURCES EN EL CONSTRUCTOR DE GRIDOBJECT??
-                    gridObjects[x, y] = new GridObject(true);
+                    gridObjects[x, y] = new GridObject(true, gridPosition);
                     gridObjects[x, y].ObjectType = GridObject.GridObjectType.Ground;
                     gridObjects[x, y].isGround = true;
                     gridObjects[x, y].isResource = false;
-                    Debug.Log("Ground");
-                    Debug.Log(gridObjects[x, y].isResource);
 
                     //Instantiate(new GridObject(true), new Vector3(x, 0, y), Quaternion.identity);
                 }
                 else
                 {
-                    gridObjects[x, y] = new GridObject(false);
+                    gridObjects[x, y] = new GridObject(false, gridPosition);
                     gridObjects[x, y].ObjectType = GridObject.GridObjectType.Water;
                     gridObjects[x, y].isGround = false;
                     gridObjects[x, y].isResource = false;
-                    Debug.Log("Water");
-                    Debug.Log(gridObjects[x, y].isResource);
                 }
             }
 
 
         //Assign rest of resources to ground GridObjects
-        
         foreach (GameResources.Resource gameResource in orderedResourceList)
         {
             float[,] noiseMapResource = new float[size, size];
@@ -79,7 +79,6 @@ public class GridSystem : MonoBehaviour
 
                     if (noiseMapResource[x, y] < gameResource.probability)
                     {
-                        Debug.Log(noiseMapResource[x, y]);
                         gridObjects[x, y].resourceName = gameResource.resourceName;
                         gridObjects[x, y].resourceAmount = gameResource.resourceAmount;
                         gridObjects[x, y].material = gameResource.material;
@@ -89,8 +88,6 @@ public class GridSystem : MonoBehaviour
 
         }
         
-
-
 
         //Display visuals
         gridObjectsVisual = new GameObject[size, size];
@@ -103,32 +100,33 @@ public class GridSystem : MonoBehaviour
                     switch (gridObjects[x, y].ObjectType)
                     {
                         case GridObject.GridObjectType.Ground:
-                            gridObjectsVisual[x, y] = Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
+                            //gridObjectsVisual[x, y] = Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
+                            gridObjectsVisual[x, y] = GameObject.Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
                             gridObjectsVisual[x, y].GetComponent<MeshRenderer>().material = gameResources.ground.material;
                             break;
 
                         case GridObject.GridObjectType.Water:
-                            gridObjectsVisual[x, y] = Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
+                            //gridObjectsVisual[x, y] = Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
+                            gridObjectsVisual[x, y] = GameObject.Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
                             gridObjectsVisual[x, y].GetComponent<MeshRenderer>().material = gameResources.water.material;
                             break;
                     }
                 }
-
-
                 else
                 {
-                    gridObjectsVisual[x, y] = Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
+                    //gridObjectsVisual[x, y] = Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
+                    gridObjectsVisual[x, y] = GameObject.Instantiate(gridObjectPrefab, new Vector3(x, 0, y), Quaternion.Euler(new Vector3(90, 0, 0)));
                     gridObjectsVisual[x, y].GetComponent<MeshRenderer>().material = gridObjects[x, y].material;
                 }
-
-
             }
     }
 
+    public GridObject GetGridObject(GridPosition gridPosition)
+    {
+        GridObject gridObject = gridObjects[gridPosition.x, gridPosition.z];
 
-
-
-
+        return gridObject;
+    }
 
 
     //private void OnDrawGizmos()
@@ -142,8 +140,8 @@ public class GridSystem : MonoBehaviour
     //            Vector3 nextjPosition = nextiPosition + new Vector3(transform.position.x, transform.position.y, transform.position.z + (float)j);
     //            Gizmos.DrawCube(nextjPosition, size);
     //        }
-            
+
     //    }
-        
+
     //}
 }

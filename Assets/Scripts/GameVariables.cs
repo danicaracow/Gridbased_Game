@@ -67,11 +67,11 @@ public class GameVariables : MonoBehaviour
         farmGatheringAmount = buildingStartStats.farmData.gatheringAmount;
     }
 
-    private void ModifyBuildingNumber(Building.buildingTypes buildingType, bool increaseNumber)
+    private void ModifyBuildingNumber(Building Building, bool increaseNumber)
     {
         int modifier = increaseNumber ? 1 : -1;
 
-        switch (buildingType)
+        switch (Building.GetBuildingType())
         {
             case Building.buildingTypes.Mine:
                 mineNumber += modifier;
@@ -88,7 +88,7 @@ public class GameVariables : MonoBehaviour
 
     private void BuildManager_OnBuildDestroy(object sender, BuildSystem.OnBuildEventArgs e)
     {
-        ModifyBuildingNumber(e.buildingType, e.increaseNumber);
+        ModifyBuildingNumber(e.Building, e.increaseNumber);
     }
 
     public void GetResource(int resourceIncrease, buildingTypes buildingType)

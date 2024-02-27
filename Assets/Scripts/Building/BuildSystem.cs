@@ -29,8 +29,9 @@ public class BuildSystem : MonoBehaviour
     }
     public class OnBuildEventArgs : EventArgs
     {
-        public Building.buildingTypes buildingType;
+        public Building Building;
         public bool increaseNumber;
+        public Vector3 buildingPosition;
     }
 
     public GameObject BuildingGetter()
@@ -40,21 +41,22 @@ public class BuildSystem : MonoBehaviour
 
     public void Build(Vector3 position)
     {
-        Building.buildingTypes builtType = buildingList[buildingIndex].GetComponent<Building>().GetBuildingType();
+        Building Building = buildingList[buildingIndex].GetComponent<Building>();
 
         Instantiate(buildingList[buildingIndex], position, Quaternion.identity);
 
-        OnBuild?.Invoke(this, new OnBuildEventArgs { buildingType = builtType, increaseNumber = true });
+        OnBuild?.Invoke(this, new OnBuildEventArgs { Building = Building, increaseNumber = true, buildingPosition = position });
 
     }
 
     public void DestroyBuilding(GameObject building)
     {
-        Building.buildingTypes builtType = building.GetComponent<Building>().GetBuildingType();
+        Building Building = building.GetComponent<Building>();
 
         Destroy(building);
 
-        OnDestroy?.Invoke(this, new OnBuildEventArgs { buildingType = builtType, increaseNumber = false });
+        //Need to pass building position as EventArg
+        OnDestroy?.Invoke(this, new OnBuildEventArgs { Building = Building, increaseNumber = false });
     }
 
     public void OnMineSelectButtonPressed()

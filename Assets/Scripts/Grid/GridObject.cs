@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridObject
 {
+    private GridPosition gridPosition;
     public bool isGround { get; set; }
     public bool isResource { get; set; }
     public string resourceName { get; set; }
@@ -12,6 +13,9 @@ public class GridObject
     public Material material { get; set; }
     public GameResources gameResources { get; set; }
     public GridObjectType ObjectType { get; set; }
+
+    public Building Building { get; set; }
+
     public enum GridObjectType
     {
         Water,
@@ -21,9 +25,10 @@ public class GridObject
         Wood
     }
 
-    public GridObject(bool isGround) 
+    public GridObject(bool isGround, GridPosition gridPosition) 
     {
         this.isGround = isGround;
+        this.gridPosition = gridPosition;
     }
 
     

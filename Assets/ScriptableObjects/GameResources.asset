@@ -15,10 +15,14 @@ MonoBehaviour:
   water:
     material: {fileID: 2100000, guid: d6d0ff53f61c86046bce1497729acd30, type: 2}
   ground:
-    probability: 0.2
+    probability: 0.7
     material: {fileID: 2100000, guid: 821b9b5b0f032684bada5e4599e75c53, type: 2}
   resourceList:
   - resourceName: Gold
     resourceAmount: 0
-    probability: 1
+    probability: 0.3
     material: {fileID: 2100000, guid: 4758df596a021c649a1ad7c697191e89, type: 2}
+  - resourceName: Grass
+    resourceAmount: 0
+    probability: 0
+    material: {fileID: 2100000, guid: f365d3b70a0cd124095c4249d76c580b, type: 2}
