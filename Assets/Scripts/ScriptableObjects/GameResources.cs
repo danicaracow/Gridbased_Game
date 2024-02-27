@@ -12,18 +12,20 @@ public class GameResources : ScriptableObject
         public string resourceName;
         public int resourceAmount;
         public float probability;
-        public Texture texture;
+        public Material material;
     }
 
+    [System.Serializable]
     public class Ground
     {
         public float probability;
-        public Texture texture;
+        public Material material;
     }
 
+    [System.Serializable]
     public class Water
     {
-        public Texture texture;
+        public Material material;
     }
 
     

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1970,10 +1970,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 50
   scale: 0.1
-  gameResources: {fileID: 0}
+  gameResources: {fileID: 11400000, guid: e72a9f6d4ba8d9d4e9ead5653fe36280, type: 2}
   groundPrefab: {fileID: 1066208002577300539, guid: a4721fc63be81e24a90c95c4c8afee44, type: 3}
   waterPrefab: {fileID: 1066208002577300539, guid: a6cf23a9bc63c9244b370b3eff709eb5, type: 3}
   foodPrefab: {fileID: 1066208002577300539, guid: 28f67f087d6bc0641a8ddc704232c997, type: 3}
+  gridObjectPrefab: {fileID: 4853370567972462368, guid: 6248877fde9799e44b069ac5516d8298, type: 3}
 --- !u!4 &1623069968
 Transform:
   m_ObjectHideFlags: 0

@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca602ed46160f3d4c971f5de5065402f, type: 3}
   m_Name: GameResources
   m_EditorClassIdentifier: 
+  water:
+    material: {fileID: 2100000, guid: d6d0ff53f61c86046bce1497729acd30, type: 2}
+  ground:
+    probability: 0.2
+    material: {fileID: 2100000, guid: 821b9b5b0f032684bada5e4599e75c53, type: 2}
+  resourceList:
+  - resourceName: Gold
+    resourceAmount: 0
+    probability: 1
+    material: {fileID: 2100000, guid: 4758df596a021c649a1ad7c697191e89, type: 2}

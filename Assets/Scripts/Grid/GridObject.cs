@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridObject : MonoBehaviour
+public class GridObject
 {
-    public string resourceName;
-    public int resourceAmount;
-    public float probability;
-    public Texture texture;
-    public GridObject(string resourceName, int resourceAmount, Texture texture)
-    {
-        this.resourceName = resourceName;
-        this.resourceAmount = resourceAmount;
-        this.texture = texture;
-    }
-
+    public bool isGround { get; set; }
+    public bool isResource { get; set; }
+    public string resourceName { get; set; }
+    public int resourceAmount { get; set; }
+    public float probability { private get; set; }
+    public Material material { get; set; }
+    public GameResources gameResources { get; set; }
+    public GridObjectType ObjectType { get; set; }
     public enum GridObjectType
     {
         Water,
@@ -24,8 +21,14 @@ public class GridObject : MonoBehaviour
         Wood
     }
 
-    public GameResources gameResources { get; set; }
-    public GridObjectType ObjectType { get; set; }
+    public GridObject(bool isGround) 
+    {
+        this.isGround = isGround;
+    }
+
+    
+
+    
 
 
 }
